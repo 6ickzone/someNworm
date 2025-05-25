@@ -1,4 +1,7 @@
 <?php
+/**
+            * decryptor by 0x6ick ( Copyright 2025 by 6ickwhispers@gmail.com) 
+          **/
 set_time_limit(0);
 error_reporting(0);
 
