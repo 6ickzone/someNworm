@@ -1,7 +1,7 @@
 <?php
 /*
  * [6ickZone is Worm v2.3s — Stealth Logger + Uploader]
- * by 0x6ick - 6ickwhispers@gmail.com
+ * by 0x6ick - t.me/Yungx6ick
  */
 
 @set_time_limit(0);
